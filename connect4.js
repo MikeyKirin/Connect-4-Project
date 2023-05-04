@@ -16,7 +16,7 @@ var board = []; // array of rows, each row is array of cells  (board[y][x])
  */
 
 function makeBoard() {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
+  // set "board" to empty HEIGHT x WIDTH matrix array
   for (let y = 0; y < HEIGHT; y++) {
     board.push(Array.from({ length: WIDTH }));
   }
@@ -25,11 +25,11 @@ function makeBoard() {
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
-  // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
+  // get "htmlBoard" variable from the item in HTML w/ID of "board"
   const htmlBoard = document.getElementById("board");
 
 
-  // TODO: add comment for this code
+  // add comment for this code
   var top = document.createElement("tr"); //create a TR html element when browser loads.
   top.setAttribute("id", "column-top"); //add the id "column-top" to the tr html element
   top.addEventListener("click", handleClick); // add a listener for when user clicks.
@@ -41,7 +41,7 @@ function makeHtmlBoard() {
   }
   htmlBoard.append(top);
 
-  // TODO: add comment for this code
+  // add comment for this code
   for (var y = 0; y < HEIGHT; y++) { //Start Y at 0, if Y is less than the intended gameboard size, add a TR element. Continue until we hit our desired size.
     const row = document.createElement("tr"); //Create the TR html element for Y
     for (var x = 0; x < WIDTH; x++) { //Start X at 0, if X is less than the intended gameboard size, add a TR element. Continue until we hit our desired size.
@@ -56,7 +56,6 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
   //Insert piece into slot. If It has not hit the bottom, move it down until it does.
   for (let y = HEIGHT - 1; y >= 0; y--) {
     if (!board[y][x]) {
@@ -68,11 +67,11 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
+  // make a div and insert into correct table cell
   const gamePiece = document.createElement('div');
   gamePiece.classList.add('gamePiece');
   gamePiece.classList.add(`p${currPlayer}`);
-
+  
   const placement = document.getElementById(`${y}-${x}`);
   placement.append(gamePiece);
 }
@@ -80,7 +79,7 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
-  // TODO: pop up alert message
+  // pop up alert message
   alert(msg);
 }
 
@@ -97,8 +96,8 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
-  currPlayer = board[y][x];
+  // add line to update in-memory board
+  board[y][x] = currPlayer;
   placeInTable(y, x);
 
 
@@ -109,13 +108,12 @@ function handleClick(evt) {
   }
 
   // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
-  if (board.every(cell => cell)) {
+  // check if all cells in board are filled; if so call, call endGame
+  if (board.every(row => row.every(cell => cell))) {
     return endGame('Tie!');
   }
-
   // switch players
-  // TODO: switch currPlayer 1 <-> 2
+  // switch currPlayer 1 <-> 2
   currPlayer = currPlayer === 1 ? 2 : 1;
 }
 
