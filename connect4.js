@@ -16,7 +16,7 @@ var board = []; // array of rows, each row is array of cells  (board[y][x])
  */
 
 function makeBoard() {
-  // set "board" to empty HEIGHT x WIDTH matrix array
+  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
   for (let y = 0; y < HEIGHT; y++) {
     board.push(Array.from({ length: WIDTH }));
   }
@@ -25,11 +25,11 @@ function makeBoard() {
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
-  // get "htmlBoard" variable from the item in HTML w/ID of "board"
+  // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
   const htmlBoard = document.getElementById("board");
 
 
-  // add comment for this code
+  // TODO: add comment for this code
   var top = document.createElement("tr"); //create a TR html element when browser loads.
   top.setAttribute("id", "column-top"); //add the id "column-top" to the tr html element
   top.addEventListener("click", handleClick); // add a listener for when user clicks.
@@ -41,7 +41,7 @@ function makeHtmlBoard() {
   }
   htmlBoard.append(top);
 
-  // add comment for this code
+  // TODO: add comment for this code
   for (var y = 0; y < HEIGHT; y++) { //Start Y at 0, if Y is less than the intended gameboard size, add a TR element. Continue until we hit our desired size.
     const row = document.createElement("tr"); //Create the TR html element for Y
     for (var x = 0; x < WIDTH; x++) { //Start X at 0, if X is less than the intended gameboard size, add a TR element. Continue until we hit our desired size.
@@ -56,6 +56,7 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
+  // TODO: write the real version of this, rather than always returning 0
   //Insert piece into slot. If It has not hit the bottom, move it down until it does.
   for (let y = HEIGHT - 1; y >= 0; y--) {
     if (!board[y][x]) {
@@ -67,11 +68,11 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-  // make a div and insert into correct table cell
+  // TODO: make a div and insert into correct table cell
   const gamePiece = document.createElement('div');
   gamePiece.classList.add('gamePiece');
   gamePiece.classList.add(`p${currPlayer}`);
-  
+
   const placement = document.getElementById(`${y}-${x}`);
   placement.append(gamePiece);
 }
@@ -79,7 +80,7 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
-  // pop up alert message
+  // TODO: pop up alert message
   alert(msg);
 }
 
@@ -96,7 +97,7 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // add line to update in-memory board
+  // TODO: add line to update in-memory board
   board[y][x] = currPlayer;
   placeInTable(y, x);
 
@@ -108,12 +109,12 @@ function handleClick(evt) {
   }
 
   // check for tie
-  // check if all cells in board are filled; if so call, call endGame
+  // TODO: check if all cells in board are filled; if so call, call endGame
   if (board.every(row => row.every(cell => cell))) {
     return endGame('Tie!');
   }
   // switch players
-  // switch currPlayer 1 <-> 2
+  // TODO: switch currPlayer 1 <-> 2
   currPlayer = currPlayer === 1 ? 2 : 1;
 }
 
@@ -137,14 +138,14 @@ function checkForWin() {
 
   // TODO: read and understand this code. Add comments to help you.
 
-  for (var y = 0; y < HEIGHT; y++) {
-    for (var x = 0; x < WIDTH; x++) {
-      var horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      var vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+  for (var y = 0; y < HEIGHT; y++) { //set Y to 0. Everytime this runs for P1/P2, if Y is less than the height of the board, add another Y making Y = 1 and so on.
+    for (var x = 0; x < WIDTH; x++) { ////set X to 0. Everytime this runs for P1/P2, if X is less than the height of the board, add another X making X = 1 and so on.
+      var horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]]; // Everytime a piece drops, check where it should go(space 1/2/3). 
+      var vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]]; 
       var diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
       var diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
-      if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
+      if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) { // check spaces for the win. 
         return true;
       }
     }
